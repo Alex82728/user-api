@@ -1,6 +1,3 @@
-
-
-
 /*********************************************************************************
 *  WEB422 – Assignment 5
 *
@@ -12,8 +9,6 @@
 *  Name: Alexandru Zaporojan Student ID: 105756233 Date: 2025/03/21
 *
 ********************************************************************************/ 
-
-
 
 import { Row, Col, Image, Card } from 'react-bootstrap';
 
@@ -32,7 +27,7 @@ export default function Home() {
           <Card>
             <Card.Body>
               <Card.Text>
-                The Metropolitan Museum of Art of New York City, colloquially "The Met", is the largest art museum in the United States. Its collection contains over 2 million works of art, spanning 5,000 years of history.
+                The Metropolitan Museum of Art of New York City, colloquially &quot;The Met&quot;, is the largest art museum in the United States. Its collection contains over 2 million works of art, spanning 5,000 years of history.
               </Card.Text>
               <Card.Link href="https://en.wikipedia.org/wiki/Metropolitan_Museum_of_Art" target="_blank" rel="noreferrer">
                 Learn more on Wikipedia
@@ -44,7 +39,7 @@ export default function Home() {
           <Card>
             <Card.Body>
               <Card.Text>
-                The museum's collection includes works from ancient Egypt, classical Greece and Rome, as well as European and American paintings, sculptures, and decorative arts. Its iconic building is located in Central Park, New York City.
+                The museum&apos;s collection includes works from ancient Egypt, classical Greece and Rome, as well as European and American paintings, sculptures, and decorative arts. Its iconic building is located in Central Park, New York City.
               </Card.Text>
             </Card.Body>
           </Card>
