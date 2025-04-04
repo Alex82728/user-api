@@ -1,14 +1,19 @@
+
+
 /*********************************************************************************
-*  WEB422 – Assignment 5
+*  WEB422 – Assignment 6
 *
 *  I declare that this assignment is my own work in accordance with Seneca's
 *  Academic Integrity Policy:
 * 
 *  https://www.senecapolytechnic.ca/about/policies/academic-integrity-policy.html
 * 
-*  Name: Alexandru Zaporojan Student ID: 105756233 Date: 2025/03/21
+*  Name: Alexandru Zaporojan Student ID: 105756233 Date: 2025/04/04
+*
+*  Vercel App (Deployed) Link: https://user-api-gules-five.vercel.app/
 *
 ********************************************************************************/ 
+
 
 import { Row, Col, Image, Card } from 'react-bootstrap';
 
