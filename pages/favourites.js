@@ -6,6 +6,8 @@ import ArtworkCard from "@/components/ArtworkCard"; // Assuming you have an Artw
 export default function Favourites() {
   const [favouritesList] = useAtom(favouritesAtom);
 
+  if (!favouritesList) return null; // Prevents showing "Nothing Here" too early
+
   return (
     <Container>
       <h2 className="my-4">Favourite Artworks</h2>

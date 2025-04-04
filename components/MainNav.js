@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { useAtom } from "jotai";
 import { searchHistoryAtom } from "@/store";
+import { addToHistory } from "@/lib/userData"; // ✅ Importing addToHistory
 
 export default function MainNav() {
   const router = useRouter();
@@ -12,11 +13,11 @@ export default function MainNav() {
   const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const submitForm = (data) => {
+  const submitForm = async (data) => { // ✅ Made async
     if (!data.search.trim()) return;
 
     const queryString = `title=true&q=${encodeURIComponent(data.search)}`;
-    setSearchHistory((current) => [...current, queryString]);
+    setSearchHistory(await addToHistory(queryString)); // ✅ Using addToHistory
     router.push(`/artwork?${queryString}`);
     setIsExpanded(false);
   };
@@ -56,14 +57,14 @@ export default function MainNav() {
             </NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Header>Recent Searches</NavDropdown.Header>
-            {searchHistory.length > 0 ? (
+            {searchHistory?.length > 0 ? (
               searchHistory.slice(-5).reverse().map((query, index) => {
                 const params = new URLSearchParams(query);
                 return (
                   <NavDropdown.Item 
                     key={index} 
                     onClick={() => handleHistoryClick(query)}
-                    active={router.asPath.includes(query)} // Highlight active search
+                    active={router.asPath.includes(query)}
                   >
                     {params.get("q") || "Unknown Search"}
                   </NavDropdown.Item>

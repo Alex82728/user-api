@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import useSWR from "swr";
 import { favouritesAtom } from "@/store";
+import { addToFavourites, removeFromFavourites } from "@/lib/userData";
 import Error from "next/error";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -18,13 +19,15 @@ export default function ArtworkCardDetail({ objectID }) {
 
   // Ensure state updates if favourites change externally
   useEffect(() => {
-    setShowAdded(favouritesList.includes(objectID));
+    setShowAdded(favouritesList?.includes(objectID));
   }, [favouritesList, objectID]);
 
-  function favouritesClicked() {
-    setFavouritesList((current) =>
-      showAdded ? current.filter((fav) => fav !== objectID) : [...current, objectID]
-    );
+  async function favouritesClicked() {
+    if (showAdded) {
+      setFavouritesList(await removeFromFavourites(objectID));
+    } else {
+      setFavouritesList(await addToFavourites(objectID));
+    }
     setShowAdded(!showAdded);
   }
 

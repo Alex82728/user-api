@@ -1,12 +1,16 @@
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { searchHistoryAtom } from "@/store";
+import { removeFromHistory } from "@/lib/userData"; // ✅ Import removeFromHistory
 import { Card, ListGroup, Button } from "react-bootstrap";
 import styles from "@/styles/History.module.css";
 
 export default function History() {
   const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
   const router = useRouter();
+
+  // ✅ Prevent rendering if searchHistory is not yet loaded
+  if (!searchHistory) return null;
 
   // Parse search history into key-value objects
   let parsedHistory = [];
@@ -21,14 +25,10 @@ export default function History() {
     router.push(`/artwork?${searchHistory[index]}`);
   };
 
-  // Handle removing a search history item
-  const removeHistoryClicked = (e, index) => {
+  // ✅ Updated: Make removeHistoryClicked async & use removeFromHistory
+  const removeHistoryClicked = async (e, index) => {
     e.stopPropagation(); // Prevent triggering parent events
-    setSearchHistory((current) => {
-      let x = [...current];
-      x.splice(index, 1);
-      return x;
-    });
+    setSearchHistory(await removeFromHistory(searchHistory[index]));
   };
 
   return (
@@ -47,9 +47,9 @@ export default function History() {
               onClick={(e) => historyClicked(e, index)}
             >
               {Object.keys(historyItem).map((key) => (
-                <>
+                <span key={key}>
                   {key}: <strong>{historyItem[key]}</strong>&nbsp;
-                </>
+                </span>
               ))}
               <Button
                 className="float-end"
