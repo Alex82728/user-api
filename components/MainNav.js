@@ -29,7 +29,7 @@ export default function MainNav() {
   return (
     <Navbar expanded={expanded} className="fixed-top navbar-dark bg-primary" expand="lg">
       <Navbar.Brand as={Link} href="/" onClick={() => setExpanded(false)}>
-        Art Bazaar
+        Alexandru Zaporojan
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(!expanded)} />
       <Navbar.Collapse id="basic-navbar-nav">
