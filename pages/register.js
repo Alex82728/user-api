@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Form, Button, Alert } from "react-bootstrap";
-import { registerUser } from "../lib/authenticate";
 
 export default function Register() {
   const [userName, setUserName] = useState("");
@@ -12,12 +11,25 @@ export default function Register() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    if (password !== password2) {
+      setErrorMessage("Passwords do not match.");
+      return;
+    }
+
     try {
-      const success = await registerUser(userName, password, password2);
-      if (success) {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userName, password, password2 }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
         router.push("/login"); // Redirect to login page after successful registration
       } else {
-        setErrorMessage("Registration failed. Please check your details.");
+        setErrorMessage(data.message || "Registration failed.");
       }
     } catch (error) {
       setErrorMessage("An error occurred. Please try again.");

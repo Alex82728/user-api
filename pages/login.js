@@ -2,9 +2,6 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Form, Button, Alert } from "react-bootstrap";
 import { authenticateUser } from "../lib/authenticate";
-import { useAtom } from "jotai";
-import { favouritesAtom, searchHistoryAtom } from "../store";
-import { getFavourites, getHistory } from "../lib/userData";
 
 export default function Login() {
   const [userName, setUserName] = useState("");
@@ -12,26 +9,16 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState(null);
   const router = useRouter();
 
-  const [favouritesList, setFavouritesList] = useAtom(favouritesAtom);
-  const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
-
-  async function updateAtoms() {
-    setFavouritesList(await getFavourites());
-    setSearchHistory(await getHistory());
-  }
-
   async function handleSubmit(event) {
     event.preventDefault();
+
     try {
       const success = await authenticateUser(userName, password);
       if (success) {
-        await updateAtoms(); // Update user data
-        router.push("/favourites"); // Redirect to favourites page
-      } else {
-        setErrorMessage("Invalid login credentials.");
+        router.push("/"); // Redirect to home page or dashboard
       }
     } catch (error) {
-      setErrorMessage("An error occurred. Please try again.");
+      setErrorMessage(error.message);
     }
   }
 
